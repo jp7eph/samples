@@ -25,13 +25,10 @@ class WordNotifier extends StateNotifier<List<Word>> {
     ];
   }
 
-  void toggleFavorite({required Word target}) {
+  void toggleFavorite({required String target}) {
     state = [
-      for (final word in state)
-        if (word == target)
-          word.copyWith(isFavorite: !word.isFavorite)
-        else
-          word
+      for (final w in state)
+        if (w.word == target) w.copyWith(isFavorite: !w.isFavorite) else w
     ];
   }
 }
