@@ -64,24 +64,31 @@ class MyHomePage extends StatelessWidget {
                           showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) {
-                              return Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(word.word),
-                                    IconButton(
-                                      onPressed: () => ref
-                                          .read(wordProvider.notifier)
-                                          .toggleFavorite(target: word.word),
-                                      icon: wordState
-                                              .firstWhere((element) =>
-                                                  element.word == word.word)
-                                              .isFavorite
-                                          ? const Icon(Icons.favorite)
-                                          : const Icon(Icons.favorite_border),
+                              return Consumer(
+                                builder: (context, ref, child) {
+                                  final wordState = ref.watch(wordProvider);
+                                  return Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(word.word),
+                                        IconButton(
+                                          onPressed: () => ref
+                                              .read(wordProvider.notifier)
+                                              .toggleFavorite(
+                                                  target: word.word),
+                                          icon: wordState
+                                                  .firstWhere((element) =>
+                                                      element.word == word.word)
+                                                  .isFavorite
+                                              ? const Icon(Icons.favorite)
+                                              : const Icon(
+                                                  Icons.favorite_border),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  );
+                                },
                               );
                             },
                           );
